@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcWheatherClient.Protos";
+package weatherGetter;
+
+
+service Weather {
+  rpc GetCurentWeather (WeatherRequest) returns (WeatherReply);
+  rpc GetWeatherForecast (WeatherForecastRequest) returns (WeatherReply);
+  rpc FileDownload(FileInfo) returns (stream FileChunk );
+}
+
+message FileInfo{
+    string fileName=1;
+}
+
+message FileChunk {
+    int64 fileSize=1;    
+    bytes buffer=2;
+    FileInfo info=3;
+    int32 readedByte=4;
+}
+
+message WeatherRequest {
+  string location =1;
+}
+
+ message WeatherReply {
+  string message = 1;
+  bool success = 2;
+}
+
+message WeatherForecastRequest {
+	int32 days = 1;
+	string location =2;
+	string email =3;
+}
